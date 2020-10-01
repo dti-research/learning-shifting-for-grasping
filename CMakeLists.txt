@@ -12,7 +12,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 14)
 
 
-find_package(cereal REQUIRED)
+#find_package(cereal REQUIRED)
 #find_package(Ensenso 2.2 REQUIRED)
 find_package(OpenCV 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -34,7 +34,8 @@ if (ONLY_BUILD_TESTS)
 endif ()
 
 
-set(cpr_DIR "~/Documents/libs/cpr/")
+#set(cpr_DIR "~/Documents/libs/cpr/")
+set(cpr_DIR "/home/Workspace/vcpkg/packages/cpr_x64-linux/lib/cpr")
 set(Eigen3_DIRS "/usr/local/include/eigen3/")
 set(PYTHON_EXECUTABLE "python3")
 
@@ -51,7 +52,8 @@ find_package(cpr REQUIRED)
 find_package(CURL REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
-find_package(TensorFlow 1.10 EXACT REQUIRED)
+#find_package(TensorFlow 1.10 EXACT REQUIRED)
+find_package(TensorFlow 1.10 REQUIRED)
 
 
 find_package(catkin REQUIRED COMPONENTS
