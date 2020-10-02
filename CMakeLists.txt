@@ -53,7 +53,7 @@ find_package(CURL REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
 #find_package(TensorFlow 1.10 EXACT REQUIRED)
-find_package(TensorFlow 1.10 REQUIRED)
+find_package(TensorFlow 1.12 EXACT REQUIRED)
 
 
 find_package(catkin REQUIRED COMPONENTS
