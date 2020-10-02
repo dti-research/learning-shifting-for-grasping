@@ -12,7 +12,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 14)
 
 
-find_package(cereal REQUIRED)
+#find_package(cereal REQUIRED)
 #find_package(Ensenso 2.2 REQUIRED)
 find_package(OpenCV 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -48,7 +48,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=$
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(cpr REQUIRED)
+#find_package(cpr REQUIRED)
 find_package(CURL REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
