@@ -54,7 +54,14 @@ find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
 #find_package(TensorFlow 1.10 EXACT REQUIRED)
 find_package(TensorFlow 1.12 REQUIRED)
+##################################
+# Adding the tensorflow c++ api 
+find_package(TensorflowCC REQUIRED)
+add_executable(example example.cpp)
 
+# Link the Tensorflow library.
+target_link_libraries(example TensorflowCC::TensorflowCC)
+##################################
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
