@@ -57,10 +57,10 @@ find_package(TensorFlow 1.12 REQUIRED)
 ##################################
 # Adding the tensorflow c++ api 
 find_package(TensorflowCC REQUIRED)
-add_executable(example example.cpp)
+#add_executable(example example.cpp)
 
 # Link the Tensorflow library.
-target_link_libraries(example TensorflowCC::TensorflowCC)
+#target_link_libraries(example TensorflowCC::TensorflowCC)
 ##################################
 
 find_package(catkin REQUIRED COMPONENTS
