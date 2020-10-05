@@ -36,7 +36,7 @@ endif ()
 
 #set(cpr_DIR "~/Documents/libs/cpr/")
 set(cpr_DIR "/home/Workspace/vcpkg/packages/cpr_x64-linux/lib/cpr")
-set(Eigen3_DIRS "/usr/local/include/eigen3/")
+#set(Eigen3_DIRS "/usr/local/include/eigen3/")
 set(PYTHON_EXECUTABLE "python3")
 
 set(ENV{TENSORFLOW_SOURCE_DIR} "/usr/local/include/tensorflow")
@@ -48,7 +48,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=$
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-#find_package(cpr REQUIRED)
+find_package(cpr REQUIRED)
 find_package(CURL REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
