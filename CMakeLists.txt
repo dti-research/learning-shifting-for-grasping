@@ -34,8 +34,7 @@ if (ONLY_BUILD_TESTS)
 endif ()
 
 
-#set(cpr_DIR "~/Documents/libs/cpr/")
-set(cpr_DIR "/home/Workspace/vcpkg/packages/cpr_x64-linux/lib/cpr")
+set(cpr_DIR "/home/Workspace/cpr/")
 #set(Eigen3_DIRS "/usr/local/include/eigen3/")
 set(PYTHON_EXECUTABLE "python3")
 
