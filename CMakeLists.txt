@@ -37,7 +37,7 @@ endif ()
 set(cpr_DIR "/home/Workspace/cpr")
 set(CPR_INCLUDE_DIR ${cpr_DIR}/include)
 set(CPR_LIBRARY ${cpr_DIR}/cpr)
-#set(Eigen3_DIRS "/usr/local/include/eigen3/")
+set(Eigen3_DIRS "/home/Workspace/eigen")
 set(PYTHON_EXECUTABLE "python3")
 
 set(ENV{TENSORFLOW_SOURCE_DIR} "/usr/local/include/tensorflow")
