@@ -34,7 +34,7 @@ if (ONLY_BUILD_TESTS)
 endif ()
 
 
-set(cpr_DIR "/usr/local/include/cpr")
+set(cpr_DIR "/Workspace/cpr")
 set(CPR_INCLUDE_DIR ${cpr_DIR}/include)
 set(CPR_LIBRARY ${cpr_DIR}/cpr)
 #set(Eigen3_DIRS "/usr/local/include/eigen3/")
