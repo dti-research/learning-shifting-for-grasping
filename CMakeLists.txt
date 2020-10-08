@@ -34,7 +34,7 @@ if (ONLY_BUILD_TESTS)
 endif ()
 
 
-set(cpr_DIR "/home/Workspace/cpr/")
+set(cpr_DIR "/usr/local/include/cpr/")
 #set(Eigen3_DIRS "/usr/local/include/eigen3/")
 set(PYTHON_EXECUTABLE "python3")
 
