@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 
 find_package(cereal REQUIRED)
-#find_package(Ensenso 2.2 REQUIRED)
+find_package(Ensenso 2.2 REQUIRED)
 find_package(OpenCV 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(realsense2 REQUIRED)
@@ -151,9 +151,9 @@ target_include_directories(inference PUBLIC $ENV{TENSORFLOW_BUILD_DIR}/includes/
 target_link_libraries(inference PRIVATE cereal ${OpenCV_LIBS} TensorFlow_DEP)
 
 
-#add_library(ensenso src/ensenso/ensenso.cpp)
-#target_include_directories(ensenso PUBLIC ${Eigen3_DIRS} ${ENSENSO_INCLUDE_DIRS})
-#target_link_libraries(ensenso PUBLIC ${ENSENSO_LIBRARIES} ${OpenCV_LIBS} ros)
+add_library(ensenso src/ensenso/ensenso.cpp)
+target_include_directories(ensenso PUBLIC ${Eigen3_DIRS} ${ENSENSO_INCLUDE_DIRS})
+target_link_libraries(ensenso PUBLIC ${ENSENSO_LIBRARIES} ${OpenCV_LIBS} ros)
 
 
 add_library(realsense src/realsense/realsense.cpp)
@@ -175,7 +175,7 @@ target_link_libraries(grasping PRIVATE
   yaml-cpp
   frankr
   inference
-  #ensenso
+  ensenso
   realsense
 )
 
@@ -194,18 +194,18 @@ target_link_libraries(pushing PRIVATE
   yaml-cpp
   frankr
   inference
-  #ensenso
+  ensenso
   realsense
 )
 
 
-#add_executable(ensenso_node src/ensenso/ensenso_node.cpp)
-#target_link_libraries(ensenso_node PRIVATE
-#  ros
-#  ${OpenCV_LIBS}
-#  yaml-cpp
-#  ensenso
-#)
+add_executable(ensenso_node src/ensenso/ensenso_node.cpp)
+target_link_libraries(ensenso_node PRIVATE
+  ros
+  ${OpenCV_LIBS}
+  yaml-cpp
+  ensenso
+)
 
 
 add_executable(realsense_node src/realsense/realsense_node.cpp)
