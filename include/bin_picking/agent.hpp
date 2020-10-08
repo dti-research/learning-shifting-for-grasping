@@ -24,8 +24,8 @@
 #include <bin_picking/inference.hpp>
 #include <bin_picking/io.hpp>
 #include <bin_picking/parameter.hpp>
-#include <bin_picking/GetDepthImage.h>
-#include <bin_picking/GetImages.h>
+//#include <bin_picking/GetDepthImage.h>
+//#include <bin_picking/GetImages.h>
 
 
 

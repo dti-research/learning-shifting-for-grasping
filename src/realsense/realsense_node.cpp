@@ -8,8 +8,8 @@
 #include <sensor_msgs/image_encodings.h>
 
 #include <bin_picking/config.hpp>
-#include <bin_picking/GetDepthImage.h>
-#include <bin_picking/GetImages.h>
+//#include <bin_picking/GetDepthImage.h>
+//#include <bin_picking/GetImages.h>
 #include <realsense/config.hpp>
 #include <realsense/realsense.hpp>
 
