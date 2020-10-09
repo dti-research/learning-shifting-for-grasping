@@ -95,7 +95,7 @@ TensorFlow_REQUIRE_SOURCE()
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
-  GetDepthImage.srv
+  GetImage.srv
   GetImages.srv
 )
 
