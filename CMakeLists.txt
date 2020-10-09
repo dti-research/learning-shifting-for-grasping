@@ -42,8 +42,8 @@ set(PYTHON_EXECUTABLE "python3")
 
 set(ENV{TENSORFLOW_SOURCE_DIR} "/usr/local/include/tensorflow")
 set(ENV{TENSORFLOW_BUILD_DIR} "/usr/local/lib/tensorflow_cc")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=${TensorFlow_ABI} -O3")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=${TensorFlow_ABI}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=0")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=0")
 
 
 ## Find catkin macros and libraries
@@ -130,7 +130,9 @@ catkin_package(
     moveit_core
     moveit_ros_planning
     moveit_ros_planning_interface
+    message_runtime
 #  DEPENDS
+
 )
 
 ###########
