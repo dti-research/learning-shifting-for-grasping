@@ -67,8 +67,6 @@ find_package(TensorflowCC REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   actionlib
-  std_msgs
-  sensor_msgs
   geometry_msgs
   franka_msgs
   interactive_markers
@@ -77,6 +75,9 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_core
   moveit_ros_planning
   moveit_ros_planning_interface
+  message_generation
+  std_msgs
+  sensor_msgs
 )
 
 
@@ -95,7 +96,7 @@ TensorFlow_REQUIRE_SOURCE()
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
-  GetImage.srv
+  GetDepthImage.srv
   GetImages.srv
 )
 
