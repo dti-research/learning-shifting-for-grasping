@@ -208,6 +208,7 @@ add_executable(ensenso_node src/ensenso/ensenso_node.cpp)
 target_link_libraries(ensenso_node PRIVATE
   ros
   ${OpenCV_LIBS}
+  ${catkin_LIBRARIES}
   yaml-cpp
   ensenso
 )
@@ -219,6 +220,7 @@ add_executable(realsense_node src/realsense/realsense_node.cpp)
 target_link_libraries(realsense_node PRIVATE
   ros
   ${OpenCV_LIBS}
+  ${catkin_LIBRARIES}
   yaml-cpp
   realsense
 )
