@@ -211,7 +211,8 @@ target_link_libraries(ensenso_node PRIVATE
   yaml-cpp
   ensenso
 )
-add_dependencies(ensenso_node bin_picking_generate_messages_cpp)
+#add_dependencies(ensenso_node bin_picking_generate_messages_cpp)
+add_dependencies(ensenso_node bin_picking_gencpp)
 
 
 add_executable(realsense_node src/realsense/realsense_node.cpp)
@@ -221,5 +222,5 @@ target_link_libraries(realsense_node PRIVATE
   yaml-cpp
   realsense
 )
-add_dependencies(realsense_node bin_picking_generate_messages_cpp)
-
+#add_dependencies(realsense_node bin_picking_generate_messages_cpp)
+add_dependencies(realsense_node bin_picking_gencpp)
