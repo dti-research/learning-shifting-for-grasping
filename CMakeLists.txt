@@ -20,7 +20,7 @@ find_package(realsense2 REQUIRED)
 find_package(yaml-cpp 0.6 REQUIRED)
 
 
-include_directories(include)
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 
 if (ONLY_BUILD_TESTS)
@@ -55,14 +55,7 @@ find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
 #find_package(TensorFlow 1.10 EXACT REQUIRED)
 find_package(TensorFlow 1.12 REQUIRED)
-##################################
-# Adding the tensorflow c++ api 
-find_package(TensorflowCC REQUIRED)
-#add_executable(example example.cpp)
 
-# Link the Tensorflow library.
-#target_link_libraries(example TensorflowCC::TensorflowCC)
-##################################
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -103,8 +96,8 @@ add_service_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  sensor_msgs
   std_msgs
+  sensor_msgs
 )
 
 ###################################
@@ -122,6 +115,7 @@ catkin_package(
 #  LIBRARIES
   CATKIN_DEPENDS
     roscpp
+    message_runtime
     std_msgs
     sensor_msgs
     geometry_msgs
@@ -130,9 +124,7 @@ catkin_package(
     moveit_core
     moveit_ros_planning
     moveit_ros_planning_interface
-    message_runtime
 #  DEPENDS
-
 )
 
 ###########
@@ -206,23 +198,25 @@ target_link_libraries(pushing PRIVATE
 
 add_executable(ensenso_node src/ensenso/ensenso_node.cpp)
 target_link_libraries(ensenso_node PRIVATE
+  ${catkin_LIBRARIES}
   ros
   ${OpenCV_LIBS}
-  ${catkin_LIBRARIES}
   yaml-cpp
   ensenso
 )
-#add_dependencies(ensenso_node bin_picking_generate_messages_cpp)
+add_dependencies(ensenso_node bin_picking_generate_messages_cpp)
 add_dependencies(ensenso_node bin_picking_gencpp)
+add_dependencies(ensenso_node ${catkin_EXPORTED_TARGETS})
 
 
 add_executable(realsense_node src/realsense/realsense_node.cpp)
 target_link_libraries(realsense_node PRIVATE
+  ${catkin_LIBRARIES}
   ros
   ${OpenCV_LIBS}
-  ${catkin_LIBRARIES}
   yaml-cpp
   realsense
 )
-#add_dependencies(realsense_node bin_picking_generate_messages_cpp)
+add_dependencies(realsense_node bin_picking_generate_messages_cpp)
 add_dependencies(realsense_node bin_picking_gencpp)
+add_dependencies(realsense_node ${catkin_EXPORTED_TARGETS})
