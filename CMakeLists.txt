@@ -17,11 +17,12 @@ find_package(Ensenso 2.2 REQUIRED)
 find_package(OpenCV 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(realsense2 REQUIRED)
-find_package(yaml-cpp 0.6 REQUIRED)
-
+find_package(yaml-cpp 0.6 CONFIG REQUIRED)
+message(STATUS "yaml-cpp_VERSION = ${yaml-cpp_VERSION}")
+message(STATUS "YAML_CPP_INCLUDE_DIR = ${YAML_CPP_INCLUDE_DIR}")
+message(STATUS "YAML_CPP_LIBRARIES = ${YAML_CPP_LIBRARIES}")
 
 include_directories(include ${catkin_INCLUDE_DIRS})
-
 
 if (ONLY_BUILD_TESTS)
   message("Only build tests from test subdirectory.")
@@ -50,6 +51,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=0
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(cpr REQUIRED)
+message(STATUS "CPR INCLUDE DIR: " ${CPR_INCLUDE_DIRS})
 find_package(CURL REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Franka 0.5.0 REQUIRED)
@@ -137,31 +139,28 @@ add_library(ros INTERFACE)
 target_include_directories(ros INTERFACE ${catkin_INCLUDE_DIRS})
 target_link_libraries(ros INTERFACE ${catkin_LIBRARIES})
 
-
 add_library(frankr src/frankr/robot.cpp src/frankr/gripper.cpp)
 target_include_directories(frankr PUBLIC ${catkin_INCLUDE_DIRS} ${Eigen3_DIRS})
 target_link_libraries(frankr PUBLIC ${catkin_LIBRARIES} Franka::Franka)
-
 
 add_library(inference src/inference.cpp)
 target_include_directories(inference PUBLIC $ENV{TENSORFLOW_BUILD_DIR}/includes/)
 target_link_libraries(inference PRIVATE cereal ${OpenCV_LIBS} TensorFlow_DEP)
 
-
 add_library(ensenso src/ensenso/ensenso.cpp)
 target_include_directories(ensenso PUBLIC ${Eigen3_DIRS} ${ENSENSO_INCLUDE_DIRS})
 target_link_libraries(ensenso PUBLIC ${ENSENSO_LIBRARIES} ${OpenCV_LIBS} ros)
-
 
 add_library(realsense src/realsense/realsense.cpp)
 target_include_directories(realsense PUBLIC ${Eigen3_DIRS} ${GLFW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${realsense_INCLUDE_DIR})
 target_link_libraries(realsense PUBLIC glfw ${GLFW_LIBRARIES} ${OpenCV_LIBS} ${OPENGL_LIBRARIES} ${realsense2_LIBRARY} ros)
 
-
 add_executable(grasping src/grasping.cpp)
+add_dependencies(grasping bin_picking_generate_messages_cpp)
 target_include_directories(grasping PRIVATE
   ${CPR_INCLUDE_DIRS}
   ${Eigen3_DIRS}
+  ${YAML_CPP_INCLUDE_DIR}
 )
 target_link_libraries(grasping PRIVATE
   ros
@@ -176,11 +175,12 @@ target_link_libraries(grasping PRIVATE
   realsense
 )
 
-
 add_executable(pushing src/pushing.cpp)
+add_dependencies(pushing bin_picking_generate_messages_cpp)
 target_include_directories(pushing PRIVATE
   ${CPR_INCLUDE_DIRS}
   ${Eigen3_DIRS}
+  ${YAML_CPP_INCLUDE_DIR}
 )
 target_link_libraries(pushing PRIVATE
   ros
@@ -195,28 +195,22 @@ target_link_libraries(pushing PRIVATE
   realsense
 )
 
-
 add_executable(ensenso_node src/ensenso/ensenso_node.cpp)
+add_dependencies(ensenso_node bin_picking_generate_messages_cpp)
 target_link_libraries(ensenso_node PRIVATE
-  ${catkin_LIBRARIES}
   ros
   ${OpenCV_LIBS}
   yaml-cpp
   ensenso
 )
-add_dependencies(ensenso_node bin_picking_generate_messages_cpp)
-add_dependencies(ensenso_node bin_picking_gencpp)
-add_dependencies(ensenso_node ${catkin_EXPORTED_TARGETS})
 
 
 add_executable(realsense_node src/realsense/realsense_node.cpp)
+add_dependencies(realsense_node bin_picking_generate_messages_cpp)
 target_link_libraries(realsense_node PRIVATE
-  ${catkin_LIBRARIES}
   ros
   ${OpenCV_LIBS}
   yaml-cpp
   realsense
 )
-add_dependencies(realsense_node bin_picking_generate_messages_cpp)
-add_dependencies(realsense_node bin_picking_gencpp)
-add_dependencies(realsense_node ${catkin_EXPORTED_TARGETS})
+
