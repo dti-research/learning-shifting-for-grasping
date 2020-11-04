@@ -1,7 +1,7 @@
 # Robot Learning of Shifting Objects for Grasping in Cluttered Environments
 
 <div align="center">
-  <img width="500" src="https://raw.githubusercontent.com/dti-research/learning-shifting-for-grasping/master/resources/IMG_1829.JPG">
+  <img width="500" src="https://raw.githubusercontent.com/dti-research/learning-shifting-for-grasping/bug/new-codebase/resources/IMG_1829.jpeg">
 </div>
 
 This repository contains a *replication* of the paper *Robot Learning of Shifting Objects for Grasping in Cluttered Environments* presented at IROS 2019 in Macau. The code is inspired by the original work and procedings hereof but is **not** the original codebase. All dependencies are contained in a Docker image available from Docker Hub: [dtiresearch/learning-shifting-for-grasping](https://hub.docker.com/repository/docker/dtiresearch/learning-shifting-for-grasping) to allow for easy reproduction.
