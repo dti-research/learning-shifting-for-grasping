@@ -24,3 +24,12 @@ docker pull dtiresearch/learning-shifting-for-grasping
 
 - The trained models is available in the `models` directory
 - CAD-models of the gripper fingers, camera mount, and box mounts are located in the `cad-models` directory
+
+## Software Environment Details
+
+While upgrading the codebase we decided to upgrade to the newest ROS 1 version that Franka supports which is currently ROS Melodic. More details on the installation process of each library can be found in the [Dockerfile](docker/Dockerfile).
+
+- ROS Melodic
+- Franka Control Interface (FCI) v4.0.4 ([robot firmware](https://support.franka.de/))
+- libfranka [v0.8.0](https://frankaemika.github.io/docs/libfranka_changelog.html#id1)
+- Franka ROS [v0.6.0](https://frankaemika.github.io/docs/franka_ros_changelog.html#id3)
