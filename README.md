@@ -36,7 +36,7 @@ docker run -it --rm --net=host --privileged
 
 Below is a chosen list of libraries with versions, more details on the installation process of each library can be found in the [Dockerfile](docker/Dockerfile).
 
-- ROS Melodic
+- ROS Kinetic (Ubuntu 16.04)
 - Franka Control Interface (FCI) v4.0.4 ([robot firmware](https://support.franka.de/))
 - libfranka [v0.8.0](https://frankaemika.github.io/docs/libfranka_changelog.html#id1)
 - Franka ROS [v0.6.0](https://frankaemika.github.io/docs/franka_ros_changelog.html#id3)
