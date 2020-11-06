@@ -1,8 +1,8 @@
 
 #FROM dtiresearch/ros-melodic-py3
 #FROM ros:melodic-ros-base
-FROM dtiresearch/ros-kinetic-py3
-#FROM ros:kinetic
+#FROM dtiresearch/ros-kinetic-py3
+FROM ros:kinetic
 
 LABEL maintainer="Nicolai Anton Lynnerup nily@dti.dk Lærke Fabricius llfa@dti.dk & Kim Lykke Nørregaard kimn@dti.dk"
 
@@ -64,4 +64,7 @@ RUN mkdir -p /home/workspace/
 WORKDIR /home/workspace
 
 # Create Catkin WS
-RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
+RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping 
+ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
+ENV ROS_HOSTNAME=localhost
+ENV ROS_MASTER_URI=http://localhost:11311
