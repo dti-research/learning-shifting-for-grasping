@@ -32,9 +32,9 @@ if(Eigen3_FOUND)
   message(STATUS "Found Eigen3: ${EIGEN3_INCLUDE_DIR}")
 endif()
 
-find_package(Franka 0.7.1 REQUIRED)
+find_package(Franka 0.8.0 REQUIRED)
 if(Franka_FOUND)
-  message(STATUS "Found libfranka: ${Franka_INCLUDE_DIRS}")
+  message(STATUS "Found libfranka (${Franka_VERSION}): ${Franka_INCLUDE_DIRS}")
 endif()
 
 find_package(OpenCV 3.3 REQUIRED)
