@@ -13,12 +13,19 @@ Only prerequisite is that you have Docker installed.
 - Pull down our Docker image
 
 ```
-docker pull dtiresearch/learning-shifting-for-grasping
+docker pull dtiresearch/learning-shifting-for-grasping:kinetic
 ```
 
 ## Running the Demo
 
-> to come!
+```
+https://github.com/dti-research/learning-shifting-for-grasping.git
+cd learning-shifting-for-grasping
+docker run -it --rm --net=host --privileged
+           -v $(pwd):/home/workspace/catkin_ws/src/learning-shifting-for-grasping
+           -w /home/workspace/catkin_ws
+           dtiresearch/learning-shifting-for-grasping:kinetic
+```
 
 ## Models
 
@@ -27,7 +34,7 @@ docker pull dtiresearch/learning-shifting-for-grasping
 
 ## Software Environment Details
 
-While upgrading the codebase we decided to upgrade to the newest ROS 1 version that Franka supports which is currently ROS Melodic. More details on the installation process of each library can be found in the [Dockerfile](docker/Dockerfile).
+Below is a chosen list of libraries with versions, more details on the installation process of each library can be found in the [Dockerfile](docker/Dockerfile).
 
 - ROS Melodic
 - Franka Control Interface (FCI) v4.0.4 ([robot firmware](https://support.franka.de/))
