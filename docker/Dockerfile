@@ -65,6 +65,11 @@ WORKDIR /home/workspace
 
 # Create Catkin WS
 RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping 
+
+# Set environment variables
 ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
-ENV ROS_HOSTNAME=localhost
-ENV ROS_MASTER_URI=http://localhost:11311
+ENV ROS_MASTER_URI=http://10.224.60:11311
+ENV ROS_IP=10.224.60.60
+
+# Setup .bashrc
+RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc
