@@ -14,13 +14,16 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		iputils-ping \
+		mlocate \
+		nano \
 		net-tools \
         python3-dev \
 	    python3-pip \
 	    python3-yaml \
-        wget
+        wget \
+		&& updatedb
 
-RUN pip3 install "pybind11[global]"
+RUN pip3 install "pybind11[global]" --upgrade pip
 
 ################
 # CMake 3.18.4 #
@@ -40,6 +43,8 @@ RUN apt-get update \
 ################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+		ros-${ROS_DISTRO}-moveit-commander \
+		ros-${ROS_DISTRO}-desktop-full \
         ros-${ROS_DISTRO}-franka-ros \
 	    ros-${ROS_DISTRO}-libfranka \
 		ros-${ROS_DISTRO}-opencv3
