@@ -47,7 +47,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		ros-${ROS_DISTRO}-desktop-full \
         ros-${ROS_DISTRO}-franka-ros \
 	    ros-${ROS_DISTRO}-libfranka \
-		ros-${ROS_DISTRO}-opencv3
+		ros-${ROS_DISTRO}-opencv3 \
+		ros-${ROS_DISTRO}-joint-state-controller \
+		ros-${ROS_DISTRO}-effort-controllers \
+		ros-${ROS_DISTRO}-position-controllers
 
 RUN pip3 install rospkg catkin_pkg
 
