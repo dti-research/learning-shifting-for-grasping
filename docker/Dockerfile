@@ -13,6 +13,8 @@ SHELL ["/bin/bash", "-c"]
 ################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+		iputils-ping \
+		net-tools \
         python3-dev \
 	    python3-pip \
 	    python3-yaml \
@@ -72,4 +74,5 @@ ENV ROS_MASTER_URI=http://10.224.60.66:11311
 ENV ROS_IP=10.224.60.60
 
 # Setup .bashrc
-RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
+	&& echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
