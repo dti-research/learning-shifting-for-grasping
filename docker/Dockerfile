@@ -13,6 +13,7 @@ SHELL ["/bin/bash", "-c"]
 ################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+		iproute2 \
 		iputils-ping \
 		mlocate \
 		nano \
@@ -31,7 +32,7 @@ RUN pip3 install "pybind11[global]" --upgrade pip
 
 RUN apt-get update \
 	&& apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common \
-	&& wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+	&& wget --no-check-certificate -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
 	&& apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' \
 	&& apt-get update \
 	&& apt-get install kitware-archive-keyring \
@@ -47,6 +48,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		ros-${ROS_DISTRO}-desktop-full \
         ros-${ROS_DISTRO}-franka-ros \
 	    ros-${ROS_DISTRO}-libfranka \
+		ros-${ROS_DISTRO}-moveit \
 		ros-${ROS_DISTRO}-opencv3 \
 		ros-${ROS_DISTRO}-joint-state-controller \
 		ros-${ROS_DISTRO}-effort-controllers \
@@ -79,7 +81,8 @@ RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
 # Set environment variables
 ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
 ENV ROS_MASTER_URI=http://10.224.60.66:11311
-ENV ROS_IP=10.224.60.60
+ENTRYPOINT export ROS_IP="$(ip addr | grep inet | grep 10.224 | awk '{print $2}' | cut -d"/" -f1)" \
+	&& echo $ROS_IP
 
 # Setup .bashrc
 RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
