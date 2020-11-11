@@ -27,6 +27,12 @@ docker run -it --rm --net=host --privileged
            dtiresearch/learning-shifting-for-grasping:kinetic
 ```
 
+## Inside the container
+
+```
+export ROS_IP="$(ip addr | grep inet | grep 10.224 | awk '{print $2}' | cut -d"/" -f1)"
+```
+
 ## Models
 
 - The trained models is available in the `models` directory
