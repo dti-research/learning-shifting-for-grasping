@@ -9,11 +9,11 @@ from typing import List, Optional
 
 
 
-gripper = Gripper('10.224.60.160', 0.06, 40.0)
+#gripper = Gripper('10.224.60.160', 0.06, 40.0)
 robot = Robot('panda_arm', 0.32)
-#frame = Affine()
+frame = Affine()
 
-#pose = robot.current_pose(frame)
+pose = robot.current_pose(frame)
 
-#print(pose)
-gripper.homing()
+print(pose)
+#gripper.homing()
