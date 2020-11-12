@@ -31,6 +31,7 @@ docker run -it --rm --net=host --privileged
 
 ```
 echo "export ROS_IP="$(ip addr | grep inet | grep 10.224 | awk '{print $2}' | cut -d"/" -f1)"" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ## Models
