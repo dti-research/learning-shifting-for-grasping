@@ -141,5 +141,5 @@ RUN mkdir ws_moveit && cd ws_moveit \
  	&& rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y \
 	&& catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release \
 	&& catkin build \
-	&& echo "source home/workspace/ws_moveit/devel/setup.bash" >> ~/.bashrc \
+	&& echo "source /home/workspace/ws_moveit/devel/setup.bash" >> ~/.bashrc \
 	&& /bin/bash -c "source ~/.bashrc"
