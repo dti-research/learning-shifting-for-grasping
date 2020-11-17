@@ -31,9 +31,4 @@
 - git:
     local-name: panda_moveit_config
     uri: https://github.com/dti-research/panda_moveit_config.git
-<<<<<<< HEAD
     version: kinetic-devel
-=======
-    version: melodic-devel
-    
->>>>>>> e464b67a61b756a3dd067bec969ea96d8a4c70ae
