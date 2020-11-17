@@ -32,3 +32,4 @@
     local-name: panda_moveit_config
     uri: https://github.com/dti-research/panda_moveit_config.git
     version: melodic-devel
+    
