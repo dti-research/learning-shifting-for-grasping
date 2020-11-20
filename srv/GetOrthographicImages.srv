@@ -1,0 +1,7 @@
+# Get Orthographic Images
+
+string[] camera_suffixes
+
+---
+
+learning_shifting/OrthographicImage[] images

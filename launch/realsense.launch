@@ -1,0 +1,10 @@
+<launch>
+ <!-- <include file="$(find panda_moveit_config)/launch/panda_control_moveit_rviz.launch">
+    <arg name="robot_ip" value="10.224.60.160" />
+    <arg name="load_gripper" value="false" />
+
+    <arg name="launch_rviz" value="false" />
+  </include> -->
+
+  <node name="realsense_node" pkg="learning_shifting" type="realsense_node" output="screen" />
+</launch>

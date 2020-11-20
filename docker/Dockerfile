@@ -89,7 +89,7 @@ RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
 
 # Set environment variables
 ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
-ENV ROS_MASTER_URI=http://10.224.60.66:11311
+ENV ROS_MASTER_URI=http://10.224.60.55:11311
 
 # Setup .bashrc
 RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
@@ -187,17 +187,4 @@ RUN /bin/bash -c "source ~/.bashrc" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make install" 
 	
-RUN echo "source /home/Workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
-	&& /bin/bash -c "source ~/.bashrc"
 
-
-##############################
-### CLONE THE MAIN PROJECT ###
-##############################
-RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
-#python3.6 -m pip install -r /home/Workspace/catkin_ws/src/learning-pick-and-place/requirements.txt
-#&& echo "export PYTHONPATH=$PYTHONPATH:/home/Workspace/catkin_ws/devel/bin_picking/scripts" >> ~/.bashrc
-
-RUN pip3 install rospkg
-
-RUN /bin/bash -c "export ROS_MASTER_URI=http://10.224.60.55:11311" 
