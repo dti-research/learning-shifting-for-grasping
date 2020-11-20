@@ -17,6 +17,10 @@ RUN apt update && apt install -y --no-install-recommends \
 		iputils-ping \
 		mlocate \
 		nano \
+		gedit \ 
+		python3-empy \
+		libglfw3 \
+		libglfw3-dev \
 		net-tools \
         python3-dev \
 	    python3-pip \
@@ -143,3 +147,57 @@ RUN mkdir ws_moveit && cd ws_moveit \
 	&& catkin build \
 	&& echo "source /home/workspace/ws_moveit/devel/setup.bash" >> ~/.bashrc \
 	&& /bin/bash -c "source ~/.bashrc"
+
+#########################
+### INSTALL REALSENSE ###
+#########################
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update \
+	# Get lisence key
+	&& apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE \
+	&& apt-get install -y software-properties-common \
+	# Add the repository 
+	&& add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u \
+	# Install the librealsense, Development packages & and other needed packages
+	&& apt-get install -y \
+	librealsense2-dkms \
+	librealsense2-utils \
+	librealsense2-dev  \
+	librealsense2-dbg \
+	# Upgrade the local packages 
+	&& apt-get update && apt-get --only-upgrade install -y librealsense2-utils librealsense2-dkms
+
+# Create catkin workspace and clone realsense git repository
+RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc \
+	&& /bin/bash -c "source ~/.bashrc" \
+	&& cd catkin_ws/src \
+	&& git clone https://github.com/IntelRealSense/realsense-ros.git \
+	&& git clone https://github.com/pal-robotics/ddynamic_reconfigure.git \
+	&& cd realsense-ros \
+	# The latest tag using ROS - and not ROS2
+	&& git checkout tags/2.2.17
+
+# Build the workspace from the repository
+RUN /bin/bash -c "source ~/.bashrc" \
+	&& cd catkin_ws \
+	&& rosdep update \
+	&& rosdep install -r --from-paths src --ignore-src --rosdistro=kinetic -y \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make clean" \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release" \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make install" 
+	
+RUN echo "source /home/Workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
+	&& /bin/bash -c "source ~/.bashrc"
+
+
+##############################
+### CLONE THE MAIN PROJECT ###
+##############################
+RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
+#python3.6 -m pip install -r /home/Workspace/catkin_ws/src/learning-pick-and-place/requirements.txt
+#&& echo "export PYTHONPATH=$PYTHONPATH:/home/Workspace/catkin_ws/devel/bin_picking/scripts" >> ~/.bashrc
+
+RUN pip3 install rospkg
+
+RUN /bin/bash -c "export ROS_MASTER_URI=http://10.224.60.55:11311" 
