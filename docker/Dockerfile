@@ -40,20 +40,6 @@ RUN cd /tmp/ \
 	&& make -j$(nproc) \
 	&& make install
 
-################
-# ROS Packages #
-################
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		ros-${ROS_DISTRO}-moveit \
-		ros-${ROS_DISTRO}-opencv3 \
-		ros-${ROS_DISTRO}-joint-state-controller \
-		ros-${ROS_DISTRO}-joint-trajectory-controller \
-		ros-${ROS_DISTRO}-effort-controllers \
-		ros-${ROS_DISTRO}-position-controllers
-
-RUN pip3 install rospkg catkin_pkg
-
 ###############
 # Eigen 3.3.7 #
 ###############
@@ -65,6 +51,15 @@ RUN cd /tmp/ \
 	&& mkdir build && cd build \
 	&& cmake .. && make install \
     && cd /tmp/ && rm eigen-3.3.7.tar.gz
+
+################
+# ROS Packages #
+################
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		ros-${ROS_DISTRO}-opencv3
+
+RUN pip3 install rospkg catkin_pkg
 
 #############
 # Workspace #
@@ -95,4 +90,25 @@ RUN cd catkin_ws \
 	&& apt-get update \
 	&& rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y \
 	&& /bin/bash -c ". /opt/ros/${ROS_DISTRO}/setup.bash; catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/home/workspace/libfranka/build" \
+	&& /bin/bash -c "source ~/.bashrc"
+
+##########
+# MoveIt #
+##########
+RUN mkdir ws_moveit && cd ws_moveit \
+	&& rosdep update && apt update \
+	&& apt dist-upgrade -y \
+	&& apt install -y \
+	python-rosdep \
+	python-wstool \
+	python-catkin-pkg \
+	python-catkin-tools \
+	&& wstool init src \
+	#&& wstool merge -t src https://raw.githubusercontent.com/ros-planning/moveit/${ROS_DISTRO}-devel/moveit.rosinstall \
+	&& wstool merge -t src https://raw.githubusercontent.com/dti-research/learning-shifting-for-grasping/bug/new-codebase/moveit.rosinstall \
+	&& wstool update -t src \
+ 	&& rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y \
+	&& catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release \
+	&& catkin build \
+	&& echo "source /home/workspace/ws_moveit/devel/setup.bash" >> ~/.bashrc \
 	&& /bin/bash -c "source ~/.bashrc"
