@@ -30,12 +30,12 @@ RUN pip3 install "pybind11[global]" --upgrade pip
 # CMake 3.19.0 #
 ################
 
-ARG cmake-version=3.19
-ARG cmake-build=0
+ARG cmake_version=3.19
+ARG cmake_build=0
 RUN cd /tmp/ \
-	&& wget -q --show-progress --progress=bar:force https://cmake.org/files/v$cmake-version/cmake-$cmake-version.$cmake-build.tar.gz \
-	&& tar -xzf cmake-$cmake-version.$cmake-build.tar.gz \
-	&& cd cmake-$cmake-version.$cmake-build/ \
+	&& wget -q --show-progress --progress=bar:force https://cmake.org/files/v$cmake_version/cmake-$cmake_version.$cmake_build.tar.gz \
+	&& tar -xzf cmake-$cmake_version.$cmake_build.tar.gz \
+	&& cd cmake-$cmake_version.$cmake_build/ \
 	&& ./bootstrap \
 	&& make -j$(nproc) \
 	&& make install
