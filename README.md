@@ -13,18 +13,18 @@ Only prerequisite is that you have Docker installed.
 - Pull down our Docker image
 
 ```
-docker pull dtiresearch/learning-shifting-for-grasping:kinetic
+docker pull dtiresearch/learning-shifting-for-grasping
 ```
 
 ## Running the Demo
 
 ```
-https://github.com/dti-research/learning-shifting-for-grasping.git
+git clone https://github.com/dti-research/learning-shifting-for-grasping.git
 cd learning-shifting-for-grasping
-docker run -it --rm --net=host --privileged
-           -v $(pwd):/home/workspace/catkin_ws/src/learning-shifting-for-grasping
-           -w /home/workspace/catkin_ws
-           dtiresearch/learning-shifting-for-grasping:kinetic
+docker run -it --rm --net=host --privileged \
+           -v $(pwd):/home/workspace/catkin_ws/src/learning-shifting-for-grasping \
+           -w /home/workspace/catkin_ws \
+           dtiresearch/learning-shifting-for-grasping
 ```
 
 ## Inside the container
