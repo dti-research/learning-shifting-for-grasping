@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(learning-shifting-for-grasping VERSION 1.0.0 LANGUAGES CXX)
+project(learning_shifting VERSION 1.0.0 LANGUAGES CXX)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -20,8 +20,10 @@ set(Eigen3_DIRS "/usr/local/include/eigen3")
 # Cache variables so pybind11_add_module can be used in parent projects
 set(PYTHON_EXECUTABLE python3.5)
 set(PYTHON_INCLUDE_DIR "/usr/include/python3.5m")
-set(PYTHON_LIBRARY "/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu/libpython3.5m.so")
+set(PYTHON_LIBRARY "/usr/lib/python3.5/config/libpython3.5m.so")
 set(PYBIND11_PYTHON_VERSION 3.5)
+
+
 
 
 ## Find catkin macros and libraries
@@ -31,6 +33,10 @@ find_package(Eigen3 REQUIRED)
 if(Eigen3_FOUND)
   message(STATUS "Found Eigen3: ${EIGEN3_INCLUDE_DIR}")
 endif()
+
+find_package(realsense2 REQUIRED)
+
+find_package(OpenGL REQUIRED)
 
 find_package(Franka 0.8.0 REQUIRED)
 if(Franka_FOUND)
@@ -65,6 +71,16 @@ find_package(catkin REQUIRED COMPONENTS
 # find_package(Boost REQUIRED COMPONENTS system)
 
 include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_message_files(
+  FILES
+  OrthographicImage.msg
+)
+
+add_service_files(
+  FILES
+  GetOrthographicImages.srv
+)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -121,6 +137,20 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 #   DEPENDENCIES
 #   std_msgs  # Or other packages containing msgs
 # )
+
+## Generate services in the 'srv' folder
+#add_service_files(
+#  FILES
+#  GetDepthImage.srv
+#  GetImages.srv
+#)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  sensor_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -183,6 +213,22 @@ target_include_directories(frankr PUBLIC ${catkin_INCLUDE_DIRS})
 target_link_libraries(frankr PUBLIC ${catkin_LIBRARIES} Franka::Franka Eigen3::Eigen)
 pybind11_add_module(cfrankr src/frankr/python.cpp)
 target_link_libraries(cfrankr PUBLIC frankr)
+
+add_library(realsense src/realsense/realsense.cpp)
+target_include_directories(realsense PUBLIC ${Eigen3_DIRS} ${GLFW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${realsense_INCLUDE_DIR})
+target_link_libraries(realsense PUBLIC glfw ${GLFW_LIBRARIES} ${OpenCV_LIBS} ${OPENGL_LIBRARIES} ${realsense2_LIBRARY} ros)
+
+pybind11_add_module(orthographical src/orthographic_image/python.cpp)
+target_include_directories(orthographical PRIVATE ${Eigen3_DIRS})
+target_link_libraries(orthographical PRIVATE ${OpenCV_LIBS})
+
+add_executable(realsense_node src/realsense/realsense_node.cpp)
+target_link_libraries(realsense_node PRIVATE
+  ros
+  ${OpenCV_LIBS}
+  yaml-cpp
+  realsense
+)
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations

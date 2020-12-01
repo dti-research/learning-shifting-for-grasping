@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>learning-shifting-for-grasping</name>
+  <name>learning_shifting</name>
   <version>1.0.0</version>
   <description>ROS Package for learning to shift objects prior for grasping</description>
 
