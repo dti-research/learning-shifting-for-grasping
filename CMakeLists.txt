@@ -20,8 +20,10 @@ set(Eigen3_DIRS "/usr/local/include/eigen3")
 # Cache variables so pybind11_add_module can be used in parent projects
 set(PYTHON_EXECUTABLE python3.5)
 set(PYTHON_INCLUDE_DIR "/usr/include/python3.5m")
-set(PYTHON_LIBRARY "/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu/libpython3.5m.so")
+set(PYTHON_LIBRARY "/usr/lib/python3.5/config/libpython3.5m.so")
 set(PYBIND11_PYTHON_VERSION 3.5)
+
+
 
 
 ## Find catkin macros and libraries
