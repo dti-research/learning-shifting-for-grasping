@@ -1,6 +1,6 @@
 #!/usr/bin/python3.5
 
-from cfrankr import Affine, Gripper, MotionData, Robot, Waypoint  # pylint: disable=E0611
+from include/cfrankr import Affine, Gripper, MotionData, Robot, Waypoint  # pylint: disable=E0611
 from multiprocessing import Process
 from subprocess import Popen
 import sys

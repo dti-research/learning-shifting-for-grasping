@@ -2,7 +2,7 @@
 #FROM dtiresearch/ros-melodic-py3
 #FROM ros:melodic-ros-base
 #FROM dtiresearch/ros-kinetic-py3
-FROM ros:kinetic as base
+FROM ros:kinetic
 
 LABEL maintainer="Nicolai Anton Lynnerup nily@dti.dk Lærke Fabricius llfa@dti.dk & Kim Lykke Nørregaard kimn@dti.dk"
 
@@ -85,7 +85,8 @@ RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
 
 # Set environment variables
 ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
-ENV ROS_MASTER_URI=http://10.224.60.66:11311
+ENV ROS_MASTER_URI=http://10.224.60.100:11311
+ENV ROS_IP=10.224.60.100
 
 # Setup .bashrc
 RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
@@ -94,7 +95,7 @@ RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
 
 
 #################################################################################################################################
-FROM base as libfranka_and_frankaros
+
 
 #########################
 ### INSTALL LIBFRANKA ###
@@ -120,7 +121,7 @@ RUN cd catkin_ws \
 
 
 #################################################################################################################################
-FROM libfranka_and_frankaros as complete_build
+
 
 ######################
 ### INSTALL MOVEIT ###
@@ -135,11 +136,12 @@ RUN mkdir ws_moveit && cd ws_moveit \
 	python-catkin-pkg \
 	python-catkin-tools \
 	&& wstool init src \
-#	&& wstool merge -t src https://raw.githubusercontent.com/ros-planning/moveit/master/moveit.rosinstall \
-	&& wstool merge -t src https://raw.githubusercontent.com/ros-planning/moveit/${ROS_DISTRO}-devel/moveit.rosinstall \
+	&& wstool merge -t src https://raw.githubusercontent.com/dti-research/learning-shifting-for-grasping/bug/new-codebase/moveit.rosinstall \
 	&& wstool update -t src \
  	&& rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y \
 	&& catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release \
 	&& catkin build \
 	&& echo "source /home/workspace/ws_moveit/devel/setup.bash" >> ~/.bashrc \
 	&& /bin/bash -c "source ~/.bashrc"
+
+RUN cp /home/workspace/ws_moveit/src/panda_moveit_config/config/panda_arm.xacro /opt/ros/${ROS_DISTRO}/share/panda_moveit_config/config/
