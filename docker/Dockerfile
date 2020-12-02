@@ -36,7 +36,7 @@ RUN apt update && apt install -y --no-install-recommends \
 
 RUN pip3 install "pybind11[global]" --upgrade pip \
 	&& pip install matplotlib \
-	#opencv-python \
+	opencv-python \
 	pyrealsense2 \
 	&& pip install --upgrade tensorflow
 
@@ -96,7 +96,7 @@ RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
 
 # Set environment variables
 ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
-ENV ROS_MASTER_URI=http://10.224.60.100:11311
+ENV ROS_MASTER_URI=http://10.224.55.100:11311
 ENV ROS_IP=10.224.60.100
 
 # Setup .bashrc
@@ -163,34 +163,34 @@ RUN mkdir ws_moveit && cd ws_moveit \
 ### INSTALL CV_BRIDGE ###
 #########################
 
-#RUN apt-get install -y python-catkin-tools \
-#	python3-dev \
-#	python3-catkin-pkg-modules \
-#	python3-numpy \
-#	python3-yaml \
-#	ros-kinetic-cv-bridge
+RUN mkdir -p cv_ws/src \
+	&& cd cv_ws \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make" 
 
-#RUN cd catkin_ws \
-	#&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin clean" \
-	#&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin init" \
-	#&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.5m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.5m.so" \
-	#&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin config --install" 
+RUN apt-get install -y python-catkin-tools \
+	python3-dev \
+	python3-catkin-pkg-modules \
+	python3-numpy \
+	python3-yaml \
+	ros-kinetic-cv-bridge
 
-# Forked the repo to change the lines 'python3' and 'python' to 'python-py35'
-#RUN cd catkin_ws \
-#	&& git clone https://github.com/dti-research/vision_opencv.git src/vision_opencv
+RUN cd cv_ws \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin init" \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.5m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.5m.so" \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin config --install" 
 
-#RUN cd catkin_ws \ 
-#	&& /bin/bash -c "source ~/.bashrc" \
-#	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin init" \
-#	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin clean -y" \
-#	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin init" \
-#	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.5m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.5m.so" \
-#	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin config --install" \
-#	&& git clone https://github.com/dti-research/vision_opencv.git src/vision_opencv \
-#	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin build cv_bridge" 
+# Clone the repo and change the one line 
+RUN cd cv_ws \
+	&& git clone https://github.com/ros-perception/vision_opencv.git src/vision_opencv \
+	&& cd src/vision_opencv/ \ 
+	&& git checkout 1.12.8 \ 
+	&& sed -i 's/python3/python-py35/' cv_bridge/CMakeLists.txt
 
-
+# Build Cv_Bridge 
+RUN cd cv_ws \ 
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin clean -y" \
+	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin build cv_bridge" \
+	&& /bin/bash -c "source install/setup.bash --extend" 
 
 #########################
 ### INSTALL REALSENSE ###
