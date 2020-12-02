@@ -12,7 +12,7 @@ SHELL ["/bin/bash", "-c"]
 # Dependencies #
 ################
 
-RUN apt update && apt install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
 		iproute2 \
 		iputils-ping \
 		mlocate \
@@ -32,7 +32,7 @@ RUN apt update && apt install -y --no-install-recommends \
 		libpoco-dev \
 		libeigen3-dev \
 		&& updatedb \
-		&& apt remove "*libfranka*"
+		&& apt-get remove "*libfranka*"
 
 RUN pip3 install "pybind11[global]" --upgrade pip \
 	&& pip install matplotlib \
@@ -45,20 +45,20 @@ RUN pip3 install "pybind11[global]" --upgrade pip \
 # CMake 3.18.4 #
 ################
 
-RUN apt update \
-	&& apt install -y apt-transport-https ca-certificates gnupg software-properties-common \
+RUN apt-get update \
+	&& apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common \
 	&& wget --no-check-certificate -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
 	&& apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' \
-	&& apt update \
-	&& apt install kitware-archive-keyring \
+	&& apt-get update \
+	&& apt-get install kitware-archive-keyring \
 	&& rm /etc/apt/trusted.gpg.d/kitware.gpg \
-	&& apt install -y cmake
+	&& apt-get install -y cmake
 
 ################
 # ROS Packages #
 ################
 
-RUN apt update && apt install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
 #		ros-${ROS_DISTRO}-moveit-commander \
 		ros-${ROS_DISTRO}-desktop-full \
 #       ros-${ROS_DISTRO}-franka-ros \
@@ -125,7 +125,7 @@ RUN cd catkin_ws \
 	&& /bin/bash -c "source ~/.bashrc" \
 	&& /bin/bash -c ". /opt/ros/${ROS_DISTRO}/setup.sh; catkin_init_workspace src" \
 	&& git clone --recursive https://github.com/frankaemika/franka_ros src/franka_ros \
-	&& apt update \
+	&& apt-get update \
 	&& rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y \
 	&& /bin/bash -c ". /opt/ros/${ROS_DISTRO}/setup.bash; catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/home/workspace/libfranka/build" \
 	&& /bin/bash -c "source ~/.bashrc"
@@ -141,9 +141,9 @@ RUN cd /opt/ros/kinetic/lib/python2.7/dist-packages/ \
 ### INSTALL MOVEIT ###
 ######################
 RUN mkdir ws_moveit && cd ws_moveit \
-	&& rosdep update && apt update \
-	&& apt dist-upgrade -y \
-	&& apt install -y \
+	&& rosdep update && apt-get update \
+	&& apt-get dist-upgrade -y \
+	&& apt-get install -y \
 	python-rosdep \
 #	ros-${ROS_DISTRO}-catkin \
 	python-wstool \
