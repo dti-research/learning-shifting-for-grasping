@@ -22,6 +22,7 @@ RUN apt update && apt install -y --no-install-recommends \
 		python3-tk \
 		libglfw3 \
 		libglfw3-dev \
+		libvtk6.2 \
 		net-tools \
         python3-dev \
 	    python3-pip \
@@ -95,12 +96,8 @@ RUN mkdir -p catkin_ws/src/learning-shifting-for-grasping
 
 # Set environment variables
 ENV PYTHONPATH=$PYTHONPATH:/home/workspace/catkin_ws/devel/lib
-<<<<<<< HEAD
 ENV ROS_MASTER_URI=http://10.224.60.100:11311
 ENV ROS_IP=10.224.60.100
-=======
-ENV ROS_MASTER_URI=http://10.224.60.55:11311
->>>>>>> 1b265b7d214fc174856e28af4b55d8471a3c364f
 
 # Setup .bashrc
 RUN echo "source /home/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc \
@@ -161,9 +158,7 @@ RUN mkdir ws_moveit && cd ws_moveit \
 	&& echo "source /home/workspace/ws_moveit/devel/setup.bash" >> ~/.bashrc \
 	&& /bin/bash -c "source ~/.bashrc"
 
-<<<<<<< HEAD
-RUN cp /home/workspace/ws_moveit/src/panda_moveit_config/config/panda_arm.xacro /opt/ros/${ROS_DISTRO}/share/panda_moveit_config/config/
-=======
+# RUN cp /home/workspace/ws_moveit/src/panda_moveit_config/config/panda_arm.xacro /opt/ros/${ROS_DISTRO}/share/panda_moveit_config/config/
 #########################
 ### INSTALL CV_BRIDGE ###
 #########################
@@ -237,4 +232,3 @@ RUN /bin/bash -c "source ~/.bashrc" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make install" 
 	
 
->>>>>>> 1b265b7d214fc174856e28af4b55d8471a3c364f
