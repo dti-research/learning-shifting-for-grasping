@@ -2,6 +2,7 @@
 
 import numpy as np
 from cfrankr import Affine, Gripper, MotionData, Robot, Waypoint
+from cfrankr import 
 
 bin_left_joint_values = [
             -1.8119446041276,
