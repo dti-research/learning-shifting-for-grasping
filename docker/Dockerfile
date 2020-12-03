@@ -28,7 +28,7 @@ RUN pip3 install "pybind11[global]" --upgrade pip \
 ################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		ros-${ROS_DISTRO}-desktop-full \
+#		ros-${ROS_DISTRO}-desktop-full \
 		ros-${ROS_DISTRO}-opencv3
 
 #############
@@ -114,5 +114,3 @@ RUN /bin/bash -c "source ~/.bashrc" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make clean" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin_make install" 
-	
-

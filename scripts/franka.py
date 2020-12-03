@@ -86,16 +86,16 @@ joint_bin2 = [0.12321019070998966, 0.34953718799875494, -0.009334989400345474, -
 # pose_bin2.orientation.w = 0.0237970502198
 
 
-while True:
-    # Move the robot to Home position via joint move
-    move_group.go(joint_home, wait=True)
-    move_group.stop()
+# while True:
+#     # Move the robot to Home position via joint move
+#     move_group.go(joint_home, wait=True)
+#     move_group.stop()
 
-    move_group.go(joint_bin1, wait=True)
-    move_group.stop()
+#     move_group.go(joint_bin1, wait=True)
+#     move_group.stop()
 
-    move_group.go(joint_bin2, wait=True)
-    move_group.stop()
+#     move_group.go(joint_bin2, wait=True)
+#     move_group.stop()
 
 # # pose move to bin 1
 # move_group.set_pose_target(pose_bin1)
