@@ -76,6 +76,9 @@ RUN cd cv_ws \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin build cv_bridge" \
 	&& /bin/bash -c "source install/setup.bash --extend" 
 
+RUN cd /opt/ros/kinetic/lib/python2.7/dist-packages/ \
+	&& mv cv2.so cv2_ros.so
+
 #########################
 ### INSTALL REALSENSE ###
 #########################
