@@ -8,7 +8,7 @@ This repository contains a *replication* of the paper *Robot Learning of Shiftin
 
 ## Installation
 
-Only prerequisite is that you have Docker installed.
+Only prerequisite is that you have Docker installed *and* that you have followed [Franka Emika's guide](https://frankaemika.github.io/docs/installation_linux.html#setting-up-the-real-time-kernel) on patching your Linux kernel to run real time.
 
 - Pull down our Docker image
 
@@ -27,12 +27,18 @@ docker run -it --rm --net=host --privileged \
            dtiresearch/learning-shifting-for-grasping
 ```
 
+The docker container requires priveleged rights in order to set the real time capabilities of the container, otherwise the robot is not able to be controlled by the external PC as it is acting as full controller with a 1kHz control loop. If you experience communication issues please have a look at the [troubleshooting](https://frankaemika.github.io/docs/troubleshooting.html) page.
+
+
 ## Inside the container
 
 ```
-echo "export ROS_IP="$(ip addr | grep inet | grep 10.224 | awk '{print $2}' | cut -d"/" -f1)"" >> ~/.bashrc
-source ~/.bashrc
+# TODO when learning has finished and model is uploaded
 ```
+
+### Running the Training Phase (on multiple PCs)
+
+See [TRAINING.md](TRAINING.md) for an in-depth guide on how to run the training phase on your own system.
 
 ## Models
 
