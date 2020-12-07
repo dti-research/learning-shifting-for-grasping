@@ -1,12 +1,5 @@
 #!/usr/bin/python3.5
 
-from include/cfrankr import Affine, Gripper, MotionData, Robot, Waypoint  # pylint: disable=E0611
-from multiprocessing import Process
-from subprocess import Popen
-import sys
-import time
-from typing import List, Optional
-#from utils.camera import Camera
 import matplotlib.pyplot as plt 
 import tensorflow as tf 
 import numpy as np
@@ -26,42 +19,6 @@ from sensor_msgs.msg import Image
 from sensor_msgs.msg import CompressedImage
 
 #import pyrealsense2 as rs
-
-def pyreal():
-    # Create a context object. This object owns the handles to all connected realsense devices
-    pipeline = rs.pipeline()
-    pipeline.start()
-
-    try:
-        while True:
-            # Create a pipeline object. This object configures the streaming camera and owns it's handle
-            frames = pipeline.wait_for_frames()
-            depth = frames.get_depth_frame()
-            if not depth: continue
-
-            # Print a simple text-based representation of the image, by breaking it into 10x20 pixel regions and approximating the coverage of pixels within one meter
-            coverage = [0]*64
-            for y in xrange(480):
-                for x in xrange(640):
-                    dist = depth.get_distance(x, y)
-                    if 0 < dist and dist < 1:
-                        coverage[x/10] += 1
-
-                if y%20 is 19:
-                    line = ""
-                    for c in coverage:
-                        line += " .:nhBXWW"[c/25]
-                    coverage = [0]*64
-                    print(line)
-
-    finally:
-        pipeline.stop()
-
-    depth = frames.get_depth_frame()
-    depth_data = depth.as_frame().get_data()
-    np_image = np.asanyarray(depth_data)
-
-    return np_image
 
 def callback(img):
     print("test")
