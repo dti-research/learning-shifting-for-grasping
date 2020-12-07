@@ -28,24 +28,11 @@ RUN pip3 install "pybind11[global]" --upgrade pip \
 ################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-#		ros-${ROS_DISTRO}-desktop-full \
 		ros-${ROS_DISTRO}-opencv3
 
-#############
-# Workspace #
-#############
-
-# Set environment variables
-ENV ROS_MASTER_URI=http://10.224.60.100:11311
-ENV ROS_IP=10.224.60.100
-
-#################################################################################################################################
-
-# RUN cp /home/workspace/ws_moveit/src/panda_moveit_config/config/panda_arm.xacro /opt/ros/${ROS_DISTRO}/share/panda_moveit_config/config/
-
-#########################
-### INSTALL CV_BRIDGE ###
-#########################
+###################
+# Patch cv_bridge #
+###################
 
 RUN mkdir -p cv_ws/src \
 	&& cd cv_ws \
@@ -70,7 +57,7 @@ RUN cd cv_ws \
 	&& git checkout 1.12.8 \ 
 	&& sed -i 's/python3/python-py35/' cv_bridge/CMakeLists.txt
 
-# Build Cv_Bridge 
+# Build cv_bridge 
 RUN cd cv_ws \ 
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin clean -y" \
 	&& /bin/bash -c ". /opt/ros/kinetic/setup.sh; catkin build cv_bridge" \
@@ -79,9 +66,9 @@ RUN cd cv_ws \
 RUN cd /opt/ros/kinetic/lib/python2.7/dist-packages/ \
 	&& mv cv2.so cv2_ros.so
 
-#########################
-### INSTALL REALSENSE ###
-#########################
+#####################
+# Intel RealSense 2 #
+#####################
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update \
@@ -100,8 +87,6 @@ RUN apt-get update \
 	&& apt-get update && apt-get --only-upgrade install -y librealsense2-utils librealsense2-dkms
 
 # Create catkin workspace and clone realsense git repository
-#RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc \
-#RUN	/bin/bash -c "source ~/.bashrc" \
 RUN cd catkin_ws/src \
 	&& git clone https://github.com/IntelRealSense/realsense-ros.git \
 	&& git clone https://github.com/pal-robotics/ddynamic_reconfigure.git \
